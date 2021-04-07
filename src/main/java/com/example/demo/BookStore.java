@@ -33,6 +33,24 @@ public final class BookStore {
         return prettyJson;
     }
 
+    public String getBooksFromPublisher(String pub) {
+        ArrayList<Book> availableBooks = new ArrayList<Book>();
+        String prettyJson = "{ }";
+        for(Book book : books)
+        {
+            if(book.getPublisher() == pub)
+            {
+                availableBooks.add(book);
+            }
+        }
+        if(availableBooks.size() > 0) {
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+            prettyJson = prettyGson.toJson(availableBooks);
+        }
+        return prettyJson;
+    };
+
     public void addNewBookToBookStore(Book newBook) {
         books.add(newBook);
     }
