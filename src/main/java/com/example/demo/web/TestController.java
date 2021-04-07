@@ -1,24 +1,32 @@
 package com.example.demo.web;
 
-import com.example.demo.model.SetNameRequest;
+import com.example.demo.Book;
+import com.example.demo.BookStore;
+import com.example.demo.model.AddBookRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.util.UUID;
+
 @RestController
 @Slf4j
 public class TestController {
 
-
-    @GetMapping(path = "/name")
-    public String getName() {
-        return "Kamil";
+    @GetMapping(path = "bookstore/book")
+    public String getBooks() throws IOException {
+        return BookStore.getBookStoreInstance().getAllBooksAsJSONString();
     }
 
-    @PostMapping(value = "/name")
-    public String setName(@RequestBody(required = true) SetNameRequest setNameRequest){
-        return setNameRequest.getName();
+    @PostMapping(value = "bookstore/book")
+    public String addBook(@RequestBody(required = true) AddBookRequest book) throws IOException {
+        String id = UUID.randomUUID().toString();
+        Book newBook = new Book(id, book.getTitle(), book.getAuthor(), book.getPublisher(), book.getGenre(), book.getYop());
+        BookStore.getBookStoreInstance().addNewBookToBookStore(newBook);
+        return "Id = " + id;
     }
+
 }

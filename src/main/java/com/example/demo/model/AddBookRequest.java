@@ -10,7 +10,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SetNameRequest {
+public class AddBookRequest {
 
-    private String name;
+    private String title;
+    private String author;
+    private String publisher;
+    private String genre;
+    private int yop;
+
 }
