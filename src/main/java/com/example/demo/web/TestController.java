@@ -40,8 +40,8 @@ public class TestController {
     }
 
     @PutMapping("bookstore/book/{id}")
-    public String editBook(@PathVariable(value = "id") int bookId) {
-        return "";
+    public String editBook(@PathVariable(value = "id") String id, @RequestBody(required = true) AddBookRequest book) throws IOException {
+        return BookStore.getBookStoreInstance().editBookById(id, book.getTitle(), book.getAuthor(), book.getPublisher(), book.getGenre(), book.getYop());
     };
 
     @DeleteMapping(value = "bookstore/book/{id}")

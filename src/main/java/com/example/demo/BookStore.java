@@ -79,6 +79,26 @@ public final class BookStore {
         }
     }
 
+    public String editBookById(String id, String title, String author, String publisher, String genre, int yop) {
+        int index = 0;
+        for(int i = 0; i < books.size(); i++)
+        {
+            if(books.get(i).getId().equals(id))
+            {
+                books.get(i).setTitle(title);
+                books.get(i).setAuthor(author);
+                books.get(i).setPublisher(publisher);
+                books.get(i).setGenre(genre);
+                books.get(i).setYop(yop);
+                index = i;
+            }
+        }
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+        String prettyJson = prettyGson.toJson(books.get(index));
+        return prettyJson;
+    }
+
     public void addNewBookToBookStore(Book newBook) {
         books.add(newBook);
     }
