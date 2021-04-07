@@ -39,4 +39,15 @@ public class TestController {
         return "Id = " + id;
     }
 
+    @PutMapping("bookstore/book/{id}")
+    public String editBook(@PathVariable(value = "id") int bookId) {
+        return "";
+    };
+
+    @DeleteMapping(value = "bookstore/book/{id}")
+    public String deleteBookById(@PathVariable String id) throws IOException {
+        BookStore.getBookStoreInstance().deleteBookById(id);
+        return "Status : Book Removed";
+    };
+
 }
