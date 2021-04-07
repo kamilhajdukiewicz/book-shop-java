@@ -17,19 +17,19 @@ public class Book {
     }
 
     public String getAuthor() {
-        return title;
+        return author;
     }
 
     public String getPublisher() {
-        return title;
+        return publisher;
     }
 
     public String getGenre() {
-        return title;
+        return genre;
     }
 
     public String getId() {
-        return title;
+        return id;
     }
 
     public int getYop() {

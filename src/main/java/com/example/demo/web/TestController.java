@@ -14,14 +14,21 @@ import java.util.UUID;
 public class TestController {
 
     @GetMapping(path = "bookstore/book")
-    public String getBooks() throws IOException {
-        return BookStore.getBookStoreInstance().getAllBooksAsJSONString();
-    }
+    public String getBooks(@RequestParam(required = false) String genre, @RequestParam(required = false) String publisher) throws IOException {
+        String response = "{ }";
+        System.out.println(genre);
+        System.out.println(publisher);
+        if(genre == null && publisher == null) {
+            response = BookStore.getBookStoreInstance().getAllBooksAsJSONString();
+        }
+        else if(genre != null) {
+            response = BookStore.getBookStoreInstance().getBooksByGenre(genre);
+        }
+        else {
+            response = BookStore.getBookStoreInstance().getBooksFromPublisher(publisher);
+        }
 
-    @GetMapping("bookstore/book?")
-    @ResponseBody
-    public String getBooksFromPublisher(@RequestParam String publisher) throws IOException {
-        return BookStore.getBookStoreInstance().getBooksFromPublisher(publisher);
+        return response;
     }
 
     @PostMapping(value = "bookstore/book")

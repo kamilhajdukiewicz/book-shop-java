@@ -38,7 +38,25 @@ public final class BookStore {
         String prettyJson = "{ }";
         for(Book book : books)
         {
-            if(book.getPublisher() == pub)
+            if(book.getPublisher().equals(pub))
+            {
+                availableBooks.add(book);
+            }
+        }
+        if(availableBooks.size() > 0) {
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+            prettyJson = prettyGson.toJson(availableBooks);
+        }
+        return prettyJson;
+    };
+
+    public String getBooksByGenre(String gen) {
+        ArrayList<Book> availableBooks = new ArrayList<Book>();
+        String prettyJson = "{ }";
+        for(Book book : books)
+        {
+            if(book.getGenre().equals(gen))
             {
                 availableBooks.add(book);
             }
