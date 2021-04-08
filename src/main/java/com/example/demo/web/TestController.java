@@ -2,7 +2,6 @@ package com.example.demo.web;
 
 import com.example.demo.Book;
 import com.example.demo.BookStore;
-import com.example.demo.ErrorStatus;
 import com.example.demo.model.AddBookRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
