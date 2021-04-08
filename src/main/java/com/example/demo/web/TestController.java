@@ -2,9 +2,18 @@ package com.example.demo.web;
 
 import com.example.demo.Book;
 import com.example.demo.BookStore;
+import com.example.demo.ErrorStatus;
 import com.example.demo.model.AddBookRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -30,6 +39,20 @@ public class TestController {
 
         return response;
     }
+
+    @GetMapping(path = "bookstore/verify/{id}")
+    public String checkIfTheBookIsAvailable(@PathVariable(value = "id") String id) throws IOException {
+        RestTemplate restTemplate = new RestTemplate();
+        String fooResourceUrl = "https://books-zut.nw.r.appspot.com/store/book/" + id;
+        String respond;
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(fooResourceUrl, String.class);
+            respond = BookStore.getBookStoreInstance().parseJSON(response, id);
+        } catch (HttpServerErrorException e) {
+            respond = e.getMessage();
+        }
+        return respond;
+    };
 
     @PostMapping(value = "bookstore/book")
     public String addBook(@RequestBody(required = true) AddBookRequest book) throws IOException {

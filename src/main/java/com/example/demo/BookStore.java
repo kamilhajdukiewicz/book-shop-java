@@ -1,7 +1,11 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.springframework.http.ResponseEntity;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -96,6 +100,23 @@ public final class BookStore {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
         String prettyJson = prettyGson.toJson(books.get(index));
+        return prettyJson;
+    }
+
+    public String parseJSON(ResponseEntity<String> response, String id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.getBody());
+
+        String title = root.path("tt").asText();
+        String author = root.path("at").asText();
+        String publisher = root.path("pl").asText();
+        String genre = root.path("gn").asText();
+        int yop = Integer.parseInt(root.path("pub").asText());
+
+        Book newBook = new Book(id, title, author, publisher, genre, yop);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+        String prettyJson = prettyGson.toJson(newBook);
         return prettyJson;
     }
 
