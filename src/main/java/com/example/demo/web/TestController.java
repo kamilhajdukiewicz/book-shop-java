@@ -56,9 +56,15 @@ public class TestController {
     @PostMapping(value = "bookstore/book")
     public String addBook(@RequestBody(required = true) AddBookRequest book) throws IOException {
         String id = UUID.randomUUID().toString();
-        Book newBook = new Book(id, book.getTitle(), book.getAuthor(), book.getPublisher(), book.getGenre(), book.getYop());
-        BookStore.getBookStoreInstance().addNewBookToBookStore(newBook);
-        return "Id = " + id;
+        String respond;
+        try {
+            Book newBook = new Book(id, book.getTitle(), book.getAuthor(), book.getPublisher(), book.getGenre(), book.getYop());
+            BookStore.getBookStoreInstance().addNewBookToBookStore(newBook);
+            respond = "Id = " + id;
+        } catch(IllegalArgumentException e) {
+            respond = e.getMessage();
+        }
+        return respond;
     }
 
     @PutMapping("bookstore/book/{id}")

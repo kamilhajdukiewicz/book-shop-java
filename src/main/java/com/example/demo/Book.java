@@ -1,8 +1,10 @@
 package com.example.demo;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Book {
 
-    public Book(String id, String title, String author, String publisher, String genre, int yop)
+    public Book(String id, @NotNull String title, @NotNull String author, @NotNull String publisher, String genre, int yop)
     {
         this.id = id;
         this.title = title;
