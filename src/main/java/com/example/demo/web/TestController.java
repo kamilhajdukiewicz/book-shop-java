@@ -22,18 +22,21 @@ import java.util.UUID;
 public class TestController {
 
     @GetMapping(path = "bookstore/book")
-    public String getBooks(@RequestParam(required = false) String genre, @RequestParam(required = false) String publisher) throws IOException {
+    public String getBooks(@RequestParam(required = false) String genre, @RequestParam(required = false) String publisher, @RequestParam(required = false) String isRandom) throws IOException {
         String response = "{ }";
         System.out.println(genre);
         System.out.println(publisher);
-        if(genre == null && publisher == null) {
+        if(genre == null && publisher == null && isRandom == null) {
             response = BookStore.getBookStoreInstance().getAllBooksAsJSONString();
         }
         else if(genre != null) {
             response = BookStore.getBookStoreInstance().getBooksByGenre(genre);
         }
-        else {
+        else if(publisher != null) {
             response = BookStore.getBookStoreInstance().getBooksFromPublisher(publisher);
+        }
+        else if(isRandom != null) {
+            response = BookStore.getBookStoreInstance().getRandomBook();
         }
 
         return response;

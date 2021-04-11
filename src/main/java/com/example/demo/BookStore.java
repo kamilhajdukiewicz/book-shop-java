@@ -11,6 +11,7 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public final class BookStore {
 
@@ -117,6 +118,16 @@ public final class BookStore {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
         String prettyJson = prettyGson.toJson(newBook);
+        return prettyJson;
+    }
+
+    public String getRandomBook() {
+        int size = books.size();
+        Random random = new Random();
+        int randomIndex = random.nextInt(size);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+        String prettyJson = prettyGson.toJson(books.get(randomIndex));
         return prettyJson;
     }
 
